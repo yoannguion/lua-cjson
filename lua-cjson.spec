@@ -3,14 +3,13 @@
 %define luadatadir %{_datadir}/lua/%{luaver}
 
 Name:		lua-cjson
-Version:	2.1devel
+Version:	2.1.0.10
 Release:	1%{?dist}
 Summary:	A fast JSON encoding/parsing module for Lua
 
 Group:		Development/Libraries
 License:	MIT
-URL:		http://www.kyne.com.au/~mark/software/lua-cjson/
-Source0:	http://www.kyne.com.au/~mark/software/lua-cjson/download/lua-cjson-%{version}.tar.gz
+URL:		https://github.com/yoannguion/lua-cjson
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:	lua >= %{luaver}, lua-devel >= %{luaver}
@@ -25,15 +24,13 @@ The Lua CJSON module provides JSON support for Lua. It features:
 - No dependencies on other libraries
 
 
-%prep
-%setup -q
-
-
 %build
+cd %{_sourcedir}
 make %{?_smp_mflags} CFLAGS="%{optflags}" LUA_INCLUDE_DIR="%{_includedir}"
 
 
 %install
+cd %{_sourcedir}
 rm -rf "$RPM_BUILD_ROOT"
 make install DESTDIR="$RPM_BUILD_ROOT" LUA_CMODULE_DIR="%{lualibdir}"
 make install-extra DESTDIR="$RPM_BUILD_ROOT" LUA_MODULE_DIR="%{luadatadir}" \
@@ -50,13 +47,16 @@ rm -rf "$RPM_BUILD_ROOT"
 
 %files
 %defattr(-,root,root,-)
-%doc LICENSE NEWS performance.html performance.txt manual.html manual.txt rfc4627.txt THANKS
+#%doc LICENSE NEWS performance.html performance.txt manual.html manual.txt rfc4627.txt THANKS
 %{lualibdir}/*
 %{luadatadir}/*
 %{_bindir}/*
 
 
 %changelog
+* Wed Aug 3 2022 Yoann GUION <yoann.guion@gmail.com> - 2.1.0.10-1
+- Update for 2.1.0.10
+
 * Thu Mar 1 2012 Mark Pulford <mark@kyne.com.au> - 2.1.0-1
 - Update for 2.1.0
 
@@ -64,16 +64,16 @@ rm -rf "$RPM_BUILD_ROOT"
 - Update for 2.0.0
 - Install lua2json / json2lua utilities
 
-* Wed Nov 27 2011 Mark Pulford <mark@kyne.com.au> - 1.0.4-1
+* Sun Nov 27 2011 Mark Pulford <mark@kyne.com.au> - 1.0.4-1
 - Update for 1.0.4
 
-* Wed Sep 15 2011 Mark Pulford <mark@kyne.com.au> - 1.0.3-1
+* Thu Sep 15 2011 Mark Pulford <mark@kyne.com.au> - 1.0.3-1
 - Update for 1.0.3
 
 * Sun May 29 2011 Mark Pulford <mark@kyne.com.au> - 1.0.2-1
 - Update for 1.0.2
 
-* Sun May 10 2011 Mark Pulford <mark@kyne.com.au> - 1.0.1-1
+* Tue May 10 2011 Mark Pulford <mark@kyne.com.au> - 1.0.1-1
 - Update for 1.0.1
 
 * Sun May 1 2011 Mark Pulford <mark@kyne.com.au> - 1.0-1
