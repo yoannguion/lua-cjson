@@ -33,7 +33,12 @@ The Lua CJSON module provides JSON support for Lua. It features:
 
 %build
 cd %{_sourcedir}
+%if (0%{?rhel} == 7)
 make %{?_smp_mflags} CFLAGS="%{optflags}" LUA_INCLUDE_DIR="%{_includedir}"
+%endif
+%if (0%{?rhel} >= 8)
+make %{?_smp_mflags} CFLAGS="%{optflags}" LUA_INCLUDE_DIR="%{_includedir}/lua-5.1"
+%endif
 
 
 %install
