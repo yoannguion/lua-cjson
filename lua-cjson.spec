@@ -12,8 +12,15 @@ License:	MIT
 URL:		https://github.com/yoannguion/lua-cjson
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
+%if (0%{?rhel} == 7)
 BuildRequires:	lua >= %{luaver}, lua-devel >= %{luaver}
 Requires:	lua >= %{luaver}
+%endif
+%if (0%{?rhel} >= 8)
+BuildRequires:	compat-lua >= %{luaver}, compat-lua-devel >= %{luaver}
+Requires:	compat-lua >= %{luaver}
+%endif
+
 
 %description
 The Lua CJSON module provides JSON support for Lua. It features:
